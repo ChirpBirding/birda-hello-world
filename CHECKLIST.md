@@ -20,12 +20,31 @@
 
 ### 1. Configure RevenueCat API Keys
 
-**File**: `src/screens/RevenueCatTestScreen.tsx`
+The app uses EAS Secrets (same as the main Birda app) to manage API keys securely.
 
-**Lines to update** (around line 35-36):
-```typescript
-const IOS_API_KEY = 'YOUR_IOS_API_KEY';
-const ANDROID_API_KEY = 'YOUR_ANDROID_API_KEY';
+**Option A: For EAS Builds (Recommended)**
+
+Set secrets in EAS for each environment:
+
+```bash
+# For development builds
+eas secret:create --scope project --name EXPO_PUBLIC_REVENUECAT_IOS_API_KEY --value your_ios_key --type string
+eas secret:create --scope project --name EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY --value your_android_key --type string
+```
+
+These secrets will be automatically injected during EAS builds.
+
+**Option B: For Local Development**
+
+Create a `.env` file in the project root (copy from `.env.example`):
+```bash
+cp .env.example .env
+```
+
+Edit `.env` file and add your RevenueCat API keys:
+```bash
+EXPO_PUBLIC_REVENUECAT_IOS_API_KEY=your_ios_api_key_here
+EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY=your_android_api_key_here
 ```
 
 **Where to find keys**:
@@ -34,17 +53,12 @@ const ANDROID_API_KEY = 'YOUR_ANDROID_API_KEY';
 3. Go to Settings → API Keys
 4. Copy the iOS and Android keys
 
-**Optional**: Use Platform.select for production:
-```typescript
-import { Platform } from 'react-native';
+**Note**: The app uses the same configuration pattern as the main Birda app:
+- API keys are stored in EAS Secrets (for builds) or local .env (for development)
+- They're loaded via `app.config.ts` into the Expo config
+- Runtime code accesses them via `getExpoConfigExtra()`
 
-Purchases.configure({
-  apiKey: Platform.select({
-    ios: IOS_API_KEY,
-    android: ANDROID_API_KEY,
-  }) ?? '',
-});
-```
+📖 **For detailed instructions, see [EAS_SECRETS_SETUP.md](./EAS_SECRETS_SETUP.md)**
 
 ### 2. Build Development Client
 
@@ -126,8 +140,10 @@ After building the development client:
 
 ## ⚠️ Common Issues
 
-### "RevenueCat not configured"
-- Check API keys in `RevenueCatTestScreen.tsx`
+### "RevenueCat not configured" or "RevenueCat API keys not configured"
+- Check that you created a `.env` file from `.env.example`
+- Verify API keys are set in `.env` file
+- Restart the development server after changing `.env`
 - Verify you're using the correct key for your platform
 - Check RevenueCat dashboard for project status
 

@@ -4,6 +4,7 @@
   },
   "build": {
     "development": {
+      "environment": "staging",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
@@ -14,12 +15,14 @@
       }
     },
     "preview": {
+      "environment": "preview",
       "distribution": "internal",
       "ios": {
         "resourceClass": "m-medium"
       }
     },
     "production": {
+      "environment": "production",
       "ios": {
         "resourceClass": "m-medium"
       }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,8 +13,11 @@ import Purchases, {
   LOG_LEVEL,
   PurchasesOffering,
   PurchasesOfferings,
+  STOREKIT_VERSION,
 } from "react-native-purchases";
 import RevenueCatUI, { PAYWALL_RESULT } from "react-native-purchases-ui";
+
+import { getExpoConfigExtra } from "../utils/expoConfig";
 
 export const RevenueCatTestScreen = () => {
   const [offerings, setOfferings] = useState<Record<
@@ -33,13 +37,26 @@ export const RevenueCatTestScreen = () => {
       // Set log level for debugging
       await Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
 
-      // TODO: Replace with your actual RevenueCat API keys
-      const IOS_API_KEY = "YOUR_IOS_API_KEY";
-      const ANDROID_API_KEY = "YOUR_ANDROID_API_KEY";
+      // Get RevenueCat API keys from environment config
+      const extra = getExpoConfigExtra();
+      const { ANDROID_API_KEY, IOS_API_KEY } = extra.revenueCat ?? {};
 
-      // Configure RevenueCat
+      if (!IOS_API_KEY || !ANDROID_API_KEY) {
+        throw new Error(
+          "RevenueCat API keys not configured. Please set EXPO_PUBLIC_REVENUECAT_IOS_API_KEY and EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY in your .env file",
+        );
+      }
+
+      // Configure RevenueCat with StoreKit 1
+      // Force StoreKit v1 because Firebase Analytics does not
+      // automatically send in_app_purchase event with StoreKit v2
       Purchases.configure({
-        apiKey: IOS_API_KEY, // Use Platform.select for production
+        apiKey:
+          Platform.select({
+            ios: IOS_API_KEY,
+            android: ANDROID_API_KEY,
+          }) ?? "",
+        storeKitVersion: STOREKIT_VERSION.STOREKIT_1,
       });
 
       setIsConfigured(true);

@@ -28,15 +28,22 @@ npm install
 
 ### 2. Configure RevenueCat
 
-Edit `src/screens/RevenueCatTestScreen.tsx` and replace the placeholder API keys:
+The app uses EAS Secrets (same as the main Birda app) to manage API keys.
 
-```typescript
-const IOS_API_KEY = 'YOUR_IOS_API_KEY';
-const ANDROID_API_KEY = 'YOUR_ANDROID_API_KEY';
+**For EAS Builds:**
+```bash
+eas secret:create --scope project --name EXPO_PUBLIC_REVENUECAT_IOS_API_KEY --value your_ios_key --type string
+eas secret:create --scope project --name EXPO_PUBLIC_REVENUECAT_ANDROID_API_KEY --value your_android_key --type string
 ```
 
-You can find these keys in your RevenueCat dashboard under:
-- Project Settings → API Keys
+**For Local Development:**
+Create a `.env` file (copy from `.env.example`) and add your keys:
+```bash
+cp .env.example .env
+# Edit .env and add your RevenueCat API keys
+```
+
+Find your keys in RevenueCat dashboard: Project Settings → API Keys
 
 ### 3. Build Development Client
 
