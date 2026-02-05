@@ -1,4 +1,4 @@
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet from "@gorhom/bottom-sheet";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -16,7 +16,8 @@ import { useRevenueCatOfferings } from "../hooks/useRevenueCatOfferings";
 
 export const PaywallInBottomSheetScreen = () => {
   const { offerings, loading, isConfigured, error } = useRevenueCatOfferings();
-  const [selectedOffering, setSelectedOffering] = useState<PurchasesOffering | null>(null);
+  const [selectedOffering, setSelectedOffering] =
+    useState<PurchasesOffering | null>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["90%"], []);
 
@@ -95,18 +96,22 @@ export const PaywallInBottomSheetScreen = () => {
         index={-1}
         snapPoints={snapPoints}
         enablePanDownToClose
+        enableDynamicSizing={false}
         onClose={() => setSelectedOffering(null)}
       >
-        <BottomSheetView style={styles.bottomSheetContent}>
+        <View style={styles.bottomSheetContent}>
           {selectedOffering && (
             <RevenueCatUI.Paywall
               onPurchaseCompleted={handlePurchaseCompleted}
               onPurchaseError={handlePurchaseError}
               onDismiss={handleDismiss}
-              options={{ offering: selectedOffering }}
+              options={{
+                offering: selectedOffering,
+                displayCloseButton: false,
+              }}
             />
           )}
-        </BottomSheetView>
+        </View>
       </BottomSheet>
     </View>
   );
@@ -114,17 +119,36 @@ export const PaywallInBottomSheetScreen = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
-  centerContainer: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
-  header: { padding: 20, backgroundColor: "#f5f5f5", borderBottomWidth: 1, borderBottomColor: "#e0e0e0" },
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  header: {
+    padding: 20,
+    backgroundColor: "#f5f5f5",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
   headerText: { fontSize: 18, fontWeight: "bold", marginBottom: 5 },
   subHeaderText: { fontSize: 14, color: "#666" },
   loadingText: { marginTop: 10, fontSize: 16, color: "#666" },
   errorText: { fontSize: 24, fontWeight: "bold", marginBottom: 10 },
   errorMessage: { fontSize: 16, color: "#d32f2f", textAlign: "center" },
   emptyText: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
-  offeringItem: { padding: 16, borderBottomWidth: 1, borderBottomColor: "#e0e0e0", backgroundColor: "#fff" },
-  offeringName: { fontSize: 18, fontWeight: "600", marginBottom: 4, color: "#1F87FE" },
+  offeringItem: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+    backgroundColor: "#fff",
+  },
+  offeringName: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 4,
+    color: "#1F87FE",
+  },
   offeringId: { fontSize: 14, color: "#666" },
   bottomSheetContent: { flex: 1 },
 });
-
