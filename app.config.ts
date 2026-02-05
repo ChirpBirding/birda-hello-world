@@ -1,9 +1,36 @@
 import "dotenv/config";
 import { ExpoConfig } from "expo/config";
 
+const EAS_ENVIRONMENT = process.env.EAS_BUILD_PROFILE ?? "development";
+
+interface EnvironmentConfig {
+  APP_NAME: string;
+  APP_BUNDLE_ID_IOS: string;
+  APP_BUNDLE_ID_ANDROID: string;
+}
+
+const getEnvironmentConfig = (environment: string): EnvironmentConfig => {
+  if (environment === "production") {
+    return {
+      APP_NAME: "Birda Hello World",
+      APP_BUNDLE_ID_IOS: "com.chirpbirding.birda",
+      APP_BUNDLE_ID_ANDROID: "com.chirpbirding.birda",
+    };
+  }
+  // development, staging, preview, etc.
+  return {
+    APP_NAME: "Birda Hello World Dev",
+    APP_BUNDLE_ID_IOS: "com.chirpbirding.birda-dev",
+    APP_BUNDLE_ID_ANDROID: "com.chirpbirding.birda_dev",
+  };
+};
+
+const { APP_NAME, APP_BUNDLE_ID_IOS, APP_BUNDLE_ID_ANDROID } =
+  getEnvironmentConfig(EAS_ENVIRONMENT);
+
 const config: ExpoConfig = {
   owner: "chirpbirding",
-  name: "Birda Hello World",
+  name: APP_NAME,
   slug: "birda-hello-world",
   version: "1.0.0",
   orientation: "portrait",
@@ -17,7 +44,7 @@ const config: ExpoConfig = {
   },
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "com.chirpbirding.birda",
+    bundleIdentifier: APP_BUNDLE_ID_IOS,
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
@@ -27,7 +54,7 @@ const config: ExpoConfig = {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    package: "com.chirpbirding.birda",
+    package: APP_BUNDLE_ID_ANDROID,
   },
   web: {
     favicon: "./assets/favicon.png",
