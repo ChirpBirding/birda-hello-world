@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.birda.birdahelloworld",
+      "bundleIdentifier": "com.chirpbirding.birda",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1F87FE"
       },
-      "package": "com.birda.birdahelloworld"
+      "package": "com.chirpbirding.birda"
     },
     "web": {
       "favicon": "./assets/favicon.png"

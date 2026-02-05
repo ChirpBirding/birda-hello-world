@@ -17,7 +17,7 @@ const config: ExpoConfig = {
   },
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "com.birda.birdahelloworld",
+    bundleIdentifier: "com.chirpbirding.birda",
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
     },
@@ -27,7 +27,7 @@ const config: ExpoConfig = {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    package: "com.birda.birdahelloworld",
+    package: "com.chirpbirding.birda",
   },
   web: {
     favicon: "./assets/favicon.png",
