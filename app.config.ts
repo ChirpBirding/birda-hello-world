@@ -1,7 +1,8 @@
 import "dotenv/config";
 import { ExpoConfig } from "expo/config";
 
-const EAS_ENVIRONMENT = process.env.EAS_BUILD_PROFILE ?? "development";
+// EAS_ENVIRONMENT is set by the "environment" field in eas.json build profiles
+const EAS_ENVIRONMENT = process.env.EAS_ENVIRONMENT ?? "staging";
 
 interface EnvironmentConfig {
   APP_NAME: string;
