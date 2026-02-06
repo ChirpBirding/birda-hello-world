@@ -1,10 +1,14 @@
 {
   "cli": {
-    "version": ">= 13.2.0"
+    "version": ">= 13.2.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
       "environment": "staging",
+      "env": {
+        "EAS_ENVIRONMENT": "staging"
+      },
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
@@ -15,7 +19,10 @@
       }
     },
     "preview": {
-      "environment": "preview",
+      "environment": "staging",
+      "env": {
+        "EAS_ENVIRONMENT": "staging"
+      },
       "distribution": "internal",
       "ios": {
         "resourceClass": "m-medium"
@@ -23,6 +30,9 @@
     },
     "production": {
       "environment": "production",
+      "env": {
+        "EAS_ENVIRONMENT": "production"
+      },
       "ios": {
         "resourceClass": "m-medium"
       }
