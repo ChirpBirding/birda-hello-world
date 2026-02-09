@@ -35,11 +35,16 @@
       },
       "ios": {
         "resourceClass": "m-medium"
-      }
+      },
+      "autoIncrement": true
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "1593890220"
+      }
+    }
   }
 }
 
