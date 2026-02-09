@@ -13,7 +13,6 @@ import Purchases, {
   LOG_LEVEL,
   PurchasesOffering,
   PurchasesOfferings,
-  STOREKIT_VERSION,
 } from "react-native-purchases";
 import RevenueCatUI, { PAYWALL_RESULT } from "react-native-purchases-ui";
 
@@ -47,16 +46,13 @@ export const RevenueCatTestScreen = () => {
         );
       }
 
-      // Configure RevenueCat with StoreKit 1
-      // Force StoreKit v1 because Firebase Analytics does not
-      // automatically send in_app_purchase event with StoreKit v2
+      // Configure RevenueCat (defaults to StoreKit v2)
       Purchases.configure({
         apiKey:
           Platform.select({
             ios: IOS_API_KEY,
             android: ANDROID_API_KEY,
           }) ?? "",
-        storeKitVersion: STOREKIT_VERSION.STOREKIT_1,
       });
 
       setIsConfigured(true);

@@ -4,7 +4,6 @@ import Purchases, {
   LOG_LEVEL,
   PurchasesOffering,
   PurchasesOfferings,
-  STOREKIT_VERSION,
 } from "react-native-purchases";
 
 import { getExpoConfigExtra } from "../utils/expoConfig";
@@ -48,7 +47,6 @@ export const useRevenueCatOfferings = (): UseRevenueCatOfferingsResult => {
                 ios: IOS_API_KEY,
                 android: ANDROID_API_KEY,
               }) ?? "",
-            storeKitVersion: STOREKIT_VERSION.STOREKIT_1,
           });
 
           isRevenueCatInitialized = true;
