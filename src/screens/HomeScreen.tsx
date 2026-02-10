@@ -22,7 +22,7 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   {
     label: "🐱 presentPaywall()",
-    screen: "RevenueCatTest",
+    screen: "PaywallInPresentPaywall",
     description: "Imperative method to present paywall",
   },
   {
